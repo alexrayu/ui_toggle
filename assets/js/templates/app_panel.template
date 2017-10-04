@@ -1,0 +1,8 @@
+<div id="ui_toggle-app-panel-<%= hid %>" class="ui_toggle-app-panel">
+  <div class="clearfix">
+    <a href="#" id="ui_toggle-app-control-save-<%= hid %>" title="<%= save_title %>" class="ui_toggle-app-control save">&#xe902;</a>
+    <a href="#" id="ui_toggle-app-control-adm-save-<%= hid %>" title="<%= adm_save_title %>" class="ui_toggle-app-control adm-save <%= hidden %>">&#xe904;</a>
+    <a href="#" id="ui_toggle-app-control-reset-<%= hid %>" title="<%= reset_title %>" class="ui_toggle-app-control reset">&#xe903;</a>
+  </div>
+  <div class="response"></div>
+</div>

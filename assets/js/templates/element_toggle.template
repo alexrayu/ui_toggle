@@ -1,0 +1,4 @@
+<div id="wrap-edit-<%= id %>" class="ui_toggle-app-element-wrapper">
+  <input class="ui_toggle-app-element" type="checkbox" id="app-element-<%= id %>" name="app-element-<%= id %>" <%= checked %>>
+  <label for="app-element-<%= id %>" class="option"></label>
+</div>

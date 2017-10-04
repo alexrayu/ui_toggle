@@ -1,0 +1,268 @@
+@font-face {
+  font-family: 'ui_toggle';
+  src:  url('../fonts/ui_toggle.eot?cp37hh');
+  src:  url('../fonts/ui_toggle.eot?cp37hh#iefix') format('embedded-opentype'),
+    url('../fonts/ui_toggle.ttf?cp37hh') format('truetype'),
+    url('../fonts/ui_toggle.woff?cp37hh') format('woff'),
+    url('../fonts/ui_toggle.svg?cp37hh#ui_toggle') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Container */
+.ui_toggle {
+  position: absolute;
+  right: 5px;
+  margin-top: -32px;
+  z-index: 50;
+  background: rgba(255, 255, 255, .85);
+  min-height: 115px;
+  min-width: 100px;
+}
+.ui_toggle .ajax-progress .throbber {
+  position: absolute;
+  right: 5px;
+  top: -5px;
+  z-index: 2;
+  padding: 1px 6px 2px;
+}
+.ui_toggle .ajax-progress .message {
+  display: none;
+}
+/* Base for label styling */
+.ui_toggle-toggle {
+  font-family: 'ui_toggle' !important;
+  display: none !important;
+}
+.ui_toggle-toggle-wrapper {
+  width: 45px;
+  float: right;
+  position: relative;
+}
+.ui_toggle-toggle-wrapper .form-item {
+  float: none !important;
+  margin: 0;
+}
+.ui_toggle-toggle-wrapper label {
+  position: relative;
+  float: right;
+  cursor: pointer;
+  width: 100px;
+  height: 1.2em;
+  margin-top: -20px;
+  padding: 5px;
+  text-align: right;
+  font-size: .8em;
+  line-height: 1.5em;
+  color: rgba(0,0,0,0);
+  background: rgba(0,0,0,0);
+}
+.ui_toggle-toggle-wrapper label:hover {
+  background: #fafafa;
+  color: #333;
+}
+.ui_toggle-toggle-wrapper label::after {
+  font-family: 'ui_toggle' !important;
+  font-weight: normal;
+  color: rgba(0, 0, 0, .3);
+  border-radius: 50%;
+  border: 2px solid #f0f0f0;
+  font-size: 18px;
+  line-height: 32px;
+  position: absolute;
+  text-align: center;
+  width: 32px; height: 32px;
+  padding: 2px;
+  margin-top: 22px;
+  right: 5px;
+  transition: 200ms;
+  background: #fff;
+}
+.ui_toggle-toggle:checked + label::after,
+.ui_toggle-toggle-wrapper.checked label::after {
+  font-size: 30px;
+  color: #327ebd;
+  border-color: #327ebd;
+}
+/* Type specific toggles */
+.ui_toggle-tag-wrapper label:after {
+  content: '\e901';
+}
+.ui_toggle-customize-wrapper label::after {
+  content: '\e900';
+}
+.saving label::after {
+  font-size: 16px !important;
+  color: #327ebd !important;
+  content: '\e902';
+  border-color: #f0f0f0 !important;
+}
+.error label::after {
+  font-size: 24px !important;
+  color: #d33 !important;
+  content: '\e902';
+  border-color: #d33 !important;
+}
+.out label::after {
+  font-size: 1px !important;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border-width: 0;
+  margin-top: 58px;
+  margin-right: 16px;
+  opacity: 0;
+}
+/* Panel */
+.ui_toggle-app-panel {
+  position: absolute;
+  text-align: center;
+  border-top: 2px solid #f0f0f0;
+  top: 76px;
+  right: 0;
+  padding: 5px 0;
+  width: 100px;
+}
+.ui_toggle-app-panel .ui_toggle-app-control {
+  font-family: 'ui_toggle' !important;
+  font-weight: normal;
+  content: '\e902';
+  display: inline-block;
+  position: relative;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  font-size: 17px;
+  text-align: center;
+  background: rgba(0, 0, 0, .3);
+  color: #fff;
+  border-radius: 50%;
+}
+.ui_toggle-app-panel .ui_toggle-app-control.hidden {
+  display: none !important;
+}
+.ui_toggle-app-panel .ui_toggle-app-control.save,
+.ui_toggle-app-panel .ui_toggle-app-control.adm-save {
+  font-size: 15px;
+}
+.ui_toggle-app-panel.changed .save,
+.ui_toggle-app-panel.changed .adm-save,
+.ui_toggle-app-panel.changed .reset {
+  background: #327ebd;
+}
+.ui_toggle-app-panel.error .save,
+.ui_toggle-app-panel.error .adm-save,
+.ui_toggle-app-panel.error .reset {
+  color: #fff !important;
+  background: #d33;
+}
+.ui_toggle-app-panel .ui_toggle-app-control:hover {
+  text-decoration: none;
+  background: #327ebd;
+}
+.ui_toggle-app-panel .ui_toggle-app-control:focus {
+  text-decoration: none;
+}
+.ui_toggle-app-panel .ui_toggle-app-control:active {
+  text-decoration: none;
+  background: #fff;
+  color: #327ebd;
+}
+/* Elements app */
+.ui_toggle-details {
+  display: none;
+  float: none;
+  clear: both;
+}
+.ui_toggle-details.visible {
+  display: block;
+}
+.ui_toggle-details.highlighted {
+  border-top: 2px solid #327ebd;
+}
+.ui_toggle-element-container {
+  border: 0 none;
+  transition: 150ms;
+  position: relative;
+}
+.ui_toggle-element-container:hover {
+  border-color: #327ebd;
+}
+.ui_toggle-element-container .ui_toggle-app-element-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-top: 2px solid #327ebd;
+  background: rgba(255,255,255, .5);
+  top: 0;
+  left: 0;
+}
+.ui_toggle-app-element {
+  display: none !important;
+}
+.ui_toggle-element-container .ui_toggle-app-element-wrapper label {
+  position: absolute;
+  right: 0;
+  width: 24px; height: 24px;
+}
+.ui_toggle-element-container .ui_toggle-app-element-wrapper label::after {
+  font-family: 'ui_toggle' !important;
+  content: '\e900';
+  position: absolute;
+  transition: 150ms;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  font-size: 15px;
+  background: #327ebd;
+  line-height: 24px;
+  text-align: center;
+}
+.ui_toggle-element-container .ui_toggle-app-element-wrapper label:hover::after {
+  color: #fff;
+  font-size: 19px;
+  background: #327ebd;
+}
+.ui_toggle-app-panel .response {
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  padding: 5px;
+  width: 100px;
+  text-align: right;
+  font-size: 11px;
+  line-height: 17px;
+  box-sizing: border-box;
+  background: #fbfbfb;
+  border-top: 2px solid #f0f0f0;
+}
+.ui_toggle-app-panel .response p {
+  margin-top: 0;
+  margin-bottom: .5em;
+}
+/* Table app */
+.views-table th.ui_toggle-element-container .ui_toggle-app-element-wrapper {
+  border-top: 2px solid #327ebd !important;;
+}
+.views-table .ui_toggle-element-container .ui_toggle-app-element-wrapper label {
+  position: absolute;
+  right: 50%;
+  margin-right: -12px;
+  width: 24px; height: 24px;
+}
+.views-table th.ui_toggle-element-container .ui_toggle-app-element-wrapper.ui_toggle-hidden {
+  border-top: 2px solid rgba(0,0,0, .3) !important;;
+}
+.ui_toggle-element-container.ui_toggle-hidden .ui_toggle-app-element-wrapper label::after {
+  color: #fff;
+  font-size: 15px;
+  background: rgba(0,0,0, .3);
+}
+.ui_toggle-hidden {
+  background: rgba(255,0,0,.1);
+  display: none;
+}
+.ui_toggle-hidden.ui_toggle-force-visible {
+  display: table-cell;
+}
+

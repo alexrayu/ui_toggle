@@ -1,0 +1,7 @@
+
+ui_toggle_customize:
+  title: 'Customize'
+  description: 'Customize visibility settings.'
+ui_toggle_tag:
+  title: 'Tag forms'
+  description: 'Tag forms as customizable.'

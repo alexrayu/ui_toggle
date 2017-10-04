@@ -1,0 +1,20 @@
+ui_toggle:
+  css:
+    component:
+      assets/css/ui_toggle.css: {}
+  js:
+    assets/js/ui_toggle.js: { scope: footer, weight: -3 }
+    assets/js/models/ControlModel.js: { scope: footer, weight: -2 }
+    assets/js/models/AppCustomizeModel.js: { scope: footer, weight: -2 }
+    assets/js/models/ElementModel.js: { scope: footer, weight: -2 }
+    assets/js/models/ColumnsModel.js: { scope: footer, weight: -2 }
+    assets/js/views/ControlTagView.js: { scope: footer, weight: -2 }
+    assets/js/views/ControlCustomizeView.js: { scope: footer, weight: -2 }
+    assets/js/views/AppCustomizeView.js: { scope: footer, weight: -2 }
+    assets/js/views/AppElementView.js: { scope: footer, weight: -2 }
+    assets/js/views/AppColumnsView.js: { scope: footer, weight: -2 }
+  dependencies:
+      - core/jquery
+      - core/drupal
+      - core/backbone
+      - core/jquery.once

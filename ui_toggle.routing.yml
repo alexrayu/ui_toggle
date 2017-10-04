@@ -1,0 +1,18 @@
+ui_toggle.tag:
+  path: 'ui_toggle/tag/ajax'
+  defaults:
+    _controller: '\Drupal\ui_toggle\Controller\TagController::ajax'
+    _title: 'Ajax'
+  requirements:
+    _permission: 'ui_toggle_tag'
+  options:
+    _theme: ajax_base_page
+ui_toggle.customize:
+  path: 'ui_toggle/customize/ajax'
+  defaults:
+    _controller: '\Drupal\ui_toggle\Controller\CustomizeController::ajax'
+    _title: 'Ajax'
+  requirements:
+    _permission: 'ui_toggle_customize'
+  options:
+    _theme: ajax_base_page

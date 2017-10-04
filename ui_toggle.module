@@ -1,0 +1,193 @@
+<?php
+
+/**
+ * @file
+ * UI Toggle Module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ui_toggle_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ui_toggle module.
+    case 'help.page.ui_toggle':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides more flexible visibility settings for content administration provided by views.') . '</p>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function ui_toggle_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Check permissions.
+  if (\Drupal::currentUser()->hasPermission('ui_toggle_tag') ||
+    \Drupal::currentUser()->hasPermission('ui_toggle_customize')
+  ) {
+
+    // Check if views form.
+    if (substr($form_id, 0, 6) == 'views_' && (substr($form_id, 0, 9) !== 'views_ui_')) {
+
+      $path = \Drupal::request()->getUri();
+
+      // Ensure that not views editing/preview or entity-browser modal/iframe.
+      if (!preg_match('/\/structure\/views\/view/', $path) && !preg_match('/\/entity-browser\/modal\//', $path) && !preg_match('/\/entity-browser\/iframe\//', $path) && !preg_match('/drupal_ajax/', $path) && !preg_match('/drupal_ajax/', $path)) {
+        ui_toggle_add_app_data($form, $form_state, $form_id);
+      }
+      else {
+        if (preg_match('/\/views\/ajax/', $path) && preg_match('/drupal_ajax/', $path) && !preg_match('/entity_browser/', $_POST['view_name'])) {
+          ui_toggle_add_app_data($form, $form_state, $form_id);
+        }
+      }
+
+    }
+  }
+}
+
+/**
+ * Adds the app data to the form build array.
+ *
+ * @param array $form
+ *   Form build array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state array.
+ * @param string $form_id
+ *   Form id.
+ */
+function ui_toggle_add_app_data(array &$form, FormStateInterface $form_state, $form_id) {
+
+  global $base_url;
+  $db = \Drupal::database();
+
+  $config = \Drupal::configFactory()->getEditable('ui_toggle.tags');
+  $hid = explode('--', $form['#id'])[0];
+  $uid = \Drupal::currentUser()->id();
+  $is_customizable = $config->get($hid);
+
+  // General config.
+  $form['#attached']['drupalSettings']['ui_toggle']['conf']['waypoints']['tag'] = $base_url . '/ui_toggle/tag/ajax';
+  $form['#attached']['drupalSettings']['ui_toggle']['conf']['waypoints']['customize'] = $base_url . '/ui_toggle/customize/ajax';
+
+  // Add controls container.
+  $form['ui_toggle'] = [
+    '#type' => 'container',
+    '#weight' => -999,
+    '#attributes' => [
+      'class' => ['ui_toggle'],
+      'id' => 'ui_toggle-container-' . $hid,
+    ],
+    '#attached' => ['library' => ['ui_toggle/ui_toggle']],
+  ];
+
+  // Basic tag setting.
+  $setting = [
+    'type' => 'tag',
+    'hid' => $hid,
+    'id' => 'ui_toggle-toggle-tag-' . $hid,
+    'title' => t('Allow customization'),
+    'value' => $config->get($hid),
+  ];
+
+  // User allowed to tag visibility forms.
+  if (\Drupal::currentUser()->hasPermission('ui_toggle_tag')) {
+    $form['#attached']['drupalSettings']['ui_toggle']['conf']['is_admin'] = TRUE;
+    $setting['show'] = TRUE;
+  }
+
+  $form['#attached']['drupalSettings']['ui_toggle']['controls'][$hid]['tag'] = $setting;
+  $form['#attached']['drupalSettings']['ui_toggle']['conf']['controlTemplate'] = file_get_contents(drupal_get_path('module', 'ui_toggle') . '/assets/js/templates/taggability_toggle.template');
+  $form['#attached']['drupalSettings']['ui_toggle']['conf']['panelTemplate'] = file_get_contents(drupal_get_path('module', 'ui_toggle') . '/assets/js/templates/app_panel.template');
+  $form['#attached']['drupalSettings']['ui_toggle']['conf']['elementTemplate'] = file_get_contents(drupal_get_path('module', 'ui_toggle') . '/assets/js/templates/element_toggle.template');
+
+  // Layouts.
+  $user_layout = $db->select('ui_toggle', 'h')
+    ->fields('h', ['data'])
+    ->condition('uid', $uid)
+    ->condition('hid', $hid)
+    ->execute()
+    ->fetchField();
+  $preset_layout = $db->select('ui_toggle', 'h')
+    ->fields('h', ['data'])
+    ->condition('uid', 0)
+    ->condition('hid', $hid)
+    ->execute()
+    ->fetchField();
+  $user_layout = unserialize($user_layout);
+  $preset_layout = unserialize($preset_layout);
+  $form['#attached']['drupalSettings']['ui_toggle']['layout']['hids'][$hid] = $hid;
+  $form['#attached']['drupalSettings']['ui_toggle']['layout'][$hid]['isCustomizable'] = $is_customizable;
+  if (!empty($user_layout)) {
+    $form['#attached']['drupalSettings']['ui_toggle']['layout'][$hid]['user'] = $user_layout;
+  }
+  if (!empty($preset_layout)) {
+    $form['#attached']['drupalSettings']['ui_toggle']['layout'][$hid]['preset'] = $preset_layout;
+  }
+
+  // User allowed to customize the form visibility.
+  if (\Drupal::currentUser()->hasPermission('ui_toggle_customize')) {
+    if ($form_id == 'views_exposed_form') {
+      $form_items = ui_toggle_form_items($form, $form_state);
+      $form['#attached']['drupalSettings']['ui_toggle'][$hid]['elements'] = $form_items['editable'];
+      $form['#attached']['drupalSettings']['ui_toggle'][$hid]['active_elements'] = $form_items['active'];
+      $form['#attached']['drupalSettings']['ui_toggle'][$hid]['type'] = 'elements';
+
+      // Add the advanced container.
+      $form['ui_toggle_advanced'] = [
+        '#type' => 'details',
+        '#title' => t('Advanced'),
+        '#attributes' => [
+          'class' => [
+            'clearfix',
+            'ui_toggle-details',
+            'ui_toggle-details-advanced',
+          ],
+        ],
+      ];
+    }
+    else {
+      $form['#attached']['drupalSettings']['ui_toggle'][$hid]['type'] = 'table';
+    }
+  }
+}
+
+/**
+ * Return a list of customization editable items.
+ *
+ * @param array $form
+ *   Form build array.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state array.
+ *
+ * @return array
+ *   Customization ui build array.
+ */
+function ui_toggle_form_items(array &$form, FormStateInterface &$form_state) {
+  $excluded = ['actions', 'ui_toggle'];
+  $input = $form_state->getUserInput();
+  $editable_items = [];
+  $active_items = [];
+  foreach ($form as $name => $element) {
+    if (substr($name, 0, 1) != '#' && isset($element['#type']) && $element['#type'] != 'hidden' && !in_array($name, $excluded)) {
+      $editable_item = str_replace('_', '-', $name);
+      $editable_items[] = $editable_item;
+      if (!empty($input[$name])) {
+        if (isset($form[$name]['#default_value']) && $input[$name] != $form[$name]['#default_value']) {
+          $active_items[$editable_item] = 1;
+        }
+      }
+    }
+  }
+
+  return [
+    'editable' => $editable_items,
+    'active' => $active_items,
+  ];
+}
