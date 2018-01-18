@@ -41,7 +41,8 @@ class TagController extends ControllerBase {
   /**
    * Ajax. Interact with states storage.
    *
-   * @return JsonResponse
+   * @return object
+   *   JsonResponse.
    */
   public function ajax() {
     $request = \Drupal::request();
@@ -65,7 +66,7 @@ class TagController extends ControllerBase {
       }
     }
     // Switch by control type.
-    else if (!empty($data['type'])) {
+    elseif (!empty($data['type'])) {
       switch ($data['type']) {
         case 'tag':
           $response = $this->saveTag($data);
@@ -73,17 +74,19 @@ class TagController extends ControllerBase {
       }
     }
 
-
     return new JsonResponse($response);
   }
 
   /**
-   * @param $data
-   *  The whole ajax object
+   * Save the tag.
+   *
+   * @param array $data
+   *   The whole ajax object.
+   *
    * @return array
-   *  Status variable.
+   *   Status variable.
    */
-  protected function saveTag(&$data) {
+  protected function saveTag(array &$data) {
     $config = $this->configFactory->getEditable('ui_toggle.tags');
     $tag_value = $data['value'] === TRUE ? 1 : 0;
     $config->set($data['hid'], $tag_value)->save();
@@ -92,9 +95,13 @@ class TagController extends ControllerBase {
   }
 
   /**
-   * @param $hid
+   * Check if form is customizable.
    *
-   * @return mixed
+   * @param string $hid
+   *   Handle id.
+   *
+   * @return string
+   *   Handle id.
    */
   protected function checkFormCustomizable($hid) {
     $config = $this->configFactory->getEditable('ui_toggle.tags')->get($hid);

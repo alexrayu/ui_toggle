@@ -41,7 +41,8 @@ class CustomizeController extends ControllerBase {
   /**
    * Ajax. Interact with states storage.
    *
-   * @return JsonResponse
+   * @return object
+   *   JSON Response object.
    */
   public function ajax() {
     $request = \Drupal::request();
@@ -62,6 +63,7 @@ class CustomizeController extends ControllerBase {
             'result' => $this->configFactory->getEditable('ui_toggle.tags')->get($data['hid']),
           ];
           break;
+
         case 'saveUser':
         case 'savePreset':
           $response = $this->saveLayout($data);
@@ -73,10 +75,13 @@ class CustomizeController extends ControllerBase {
   }
 
   /**
-   * @param $data
-   *  The whole ajax object
+   * Save layout in database.
+   *
+   * @param array $data
+   *   The whole ajax object.
+   *
    * @return array
-   *  Status variable.
+   *   Status variable.
    */
   protected function saveLayout(&$data) {
     $db = \Drupal::database();
