@@ -67,11 +67,11 @@
   color: rgba(0, 0, 0, .3);
   border-radius: 50%;
   border: 2px solid #f0f0f0;
-  font-size: 18px;
-  line-height: 32px;
+  font-size: 16px;
+  line-height: 25px;
   position: absolute;
   text-align: center;
-  width: 32px; height: 32px;
+  width: 24px; height: 24px;
   padding: 2px;
   margin-top: 22px;
   right: 5px;
@@ -80,7 +80,7 @@
 }
 .ui_toggle-toggle:checked + label::after,
 .ui_toggle-toggle-wrapper.checked label::after {
-  font-size: 30px;
+  font-size: 16px;
   color: #327ebd;
   border-color: #327ebd;
 }
@@ -98,7 +98,7 @@
   border-color: #f0f0f0 !important;
 }
 .error label::after {
-  font-size: 24px !important;
+  font-size: 16px !important;
   color: #d33 !important;
   content: '\e902';
   border-color: #d33 !important;
@@ -129,21 +129,24 @@
   content: '\e902';
   display: inline-block;
   position: relative;
-  width: 26px;
-  height: 26px;
-  line-height: 26px;
-  font-size: 17px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 16px;
   text-align: center;
   background: rgba(0, 0, 0, .3);
   color: #fff;
   border-radius: 50%;
+}
+.ui_toggle-app-panel .ui_toggle-app-control.reset {
+  font-size: 13px;
 }
 .ui_toggle-app-panel .ui_toggle-app-control.hidden {
   display: none !important;
 }
 .ui_toggle-app-panel .ui_toggle-app-control.save,
 .ui_toggle-app-panel .ui_toggle-app-control.adm-save {
-  font-size: 15px;
+  font-size: 13px;
 }
 .ui_toggle-app-panel.changed .save,
 .ui_toggle-app-panel.changed .adm-save,
