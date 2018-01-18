@@ -10,8 +10,8 @@
     template: _.template(drupalSettings.ui_toggle.conf.controlTemplate),
 
     events: function() {
-      var map = {};
-      var eventName = 'change input.ui_toggle-toggle-customize';
+      const map = {};
+      const eventName = 'change input.ui_toggle-toggle-customize';
       map[eventName] = 'changed';
 
       return map;
@@ -28,7 +28,7 @@
     },
 
     render: function() {
-      var html = this.template(this.model.toJSON());
+      const html = this.template(this.model.toJSON());
       this.$container.find('#wrap-' + this.model.get('id')).detach();
       this.$container.append(html);
       this.delegateEvents();
@@ -42,7 +42,7 @@
      * Provides visual indication of the current process.
      */
     setStatus: function () {
-      var status = this.model.get('status');
+      const status = this.model.get('status');
       this.$wrapper.removeClass('out');
       this.$wrapper.addClass(status);
     },
@@ -50,10 +50,8 @@
     /**
      * Reacts to the value change.
      */
-    changed: function(e) {
-      var value = this.$control.is(':checked');
-      var checked = value ? 'checked' : null;
-
+    changed: function() {
+      const value = this.$control.is(':checked');
       Drupal.ui_toggle.apps = Drupal.ui_toggle.apps || {};
       if (value) {
         Drupal.ui_toggle.initCustomizeApp(this.model.get('hid'), true);
@@ -66,7 +64,7 @@
 
     hide: function() {
       this.model.set('status', 'out');
-      if (typeof(Drupal.ui_toggle.apps) != 'undefined' && typeof(Drupal.ui_toggle.apps[this.model.get('hid')]) != 'undefined') {
+      if (typeof(Drupal.ui_toggle.apps) !== 'undefined' && typeof(Drupal.ui_toggle.apps[this.model.get('hid')]) !== 'undefined') {
         Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', 'off');
       }
     },

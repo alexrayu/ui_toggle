@@ -27,7 +27,7 @@
     },
 
     render: function() {
-      var html = this.template(this.model.toJSON());
+      const html = this.template(this.model.toJSON());
       this.$el.detach();
       this.$container.append(html);
       this.$el = $(this.el);
@@ -78,7 +78,7 @@
 
     hreset: function() {
       this.model.set('status', 'reset');
-      if (this.model.get('type') == 'elements') {
+      if (this.model.get('type') === 'elements') {
         Drupal.ui_toggle.applyElementsLayout(this.model.get('hid'), 'preset');
       }
       else {
@@ -96,7 +96,7 @@
     },
 
     saveState: function() {
-      var values = {
+      const values = {
         hid: this.model.get('hid'),
         elements: this.model.get('elements'),
         command: this.model.get('command'),
@@ -105,14 +105,14 @@
         type: 'POST',
         success: function (model, response) {
           model.set('command', null);
-          if (typeof(response.success) != 'undefined') {
+          if (typeof(response.success) !== 'undefined') {
             model.set('status', 'saved');
           }
           else {
             model.set('status', 'error');
           }
         },
-        error: function (model, response) {
+        error: function (model) {
           model.set('command', null);
           model.set('status', 'error');
         }

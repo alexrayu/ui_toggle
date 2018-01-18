@@ -24,7 +24,7 @@
     },
 
     render: function() {
-      var html = this.template(this.model.toJSON());
+      const html = this.template(this.model.toJSON());
       this.$container.detach();
       this.$el.addClass('ui_toggle-element-container').append(html);
       this.$control = this.$el.find('input.ui_toggle-app-element');
@@ -35,7 +35,7 @@
 
     // Element to model change event.
     evtChanged: function() {
-      var value = this.$control.is(':checked');
+      const value = this.$control.is(':checked');
       Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', 'changed');
       this.model.set({value: value});
       if (!value) {
@@ -50,7 +50,7 @@
 
     // Model to element change event.
     mdlChanged: function() {
-      var value = this.model.get('value');
+      const value = this.model.get('value');
       this.$control.prop('checked', this.model.get('checked'));
       if (!value) {
         this.$el.detach();

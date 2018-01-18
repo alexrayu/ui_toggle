@@ -10,8 +10,8 @@
     template: _.template(drupalSettings.ui_toggle.conf.controlTemplate),
 
     events: function () {
-      var map = {};
-      var eventName = 'change input.ui_toggle-toggle-tag';
+      const map = {};
+      const eventName = 'change input.ui_toggle-toggle-tag';
       map[eventName] = 'changed';
 
       return map;
@@ -25,7 +25,7 @@
     },
 
     render: function () {
-      var html = this.template(this.model.toJSON());
+      const html = this.template(this.model.toJSON());
       this.$container.find('#wrap-' + this.model.get('id')).detach();
       this.$container.append(html);
       this.delegateEvents();
@@ -39,11 +39,11 @@
      * Provides visual indication of the current process.
      */
     setStatus: function () {
-      var status = this.model.get('status');
+      const status = this.model.get('status');
       this.$wrapper.removeClass('error saving initial out');
       this.$wrapper.addClass(status);
-      var $label = this.$wrapper.find('label');
-      if (status == 'saving' || status == 'hidden') {
+      const $label = this.$wrapper.find('label');
+      if (status === 'saving' || status === 'hidden') {
         $label.html(Drupal.t('Saving, please wait.'));
         this.$control.prop('disabled', true);
       }
@@ -56,16 +56,16 @@
     /**
      * Reacts to the value change.
      */
-    changed: function (e) {
-      var value = this.$control.is(':checked');
-      var checked = value ? 'checked' : null;
-      var values = {value: value, checked: checked, status: 'saving'};
+    changed: function () {
+      const value = this.$control.is(':checked');
+      const checked = value ? 'checked' : null;
+      const values = {value: value, checked: checked, status: 'saving'};
       this.model.save(values, {
         type: 'POST',
         success: function (model, response) {
-          if (typeof(response.success) != 'undefined') {
+          if (typeof(response.success) !== 'undefined') {
             model.set('status', 'saved');
-            if (model.get('type') == 'elements') {
+            if (model.get('type') === 'elements') {
               Drupal.ui_toggle.applyElementsLayout(model.get('hid'), 'preset');
             }
             else {
@@ -76,26 +76,26 @@
             model.set('status', 'error');
           }
         },
-        error: function (model, response) {
+        error: function (model) {
           model.set('status', 'error');
         }
       });
 
       // Make customize react.
-      var customize_model = Drupal.ui_toggle.Controls.get('ui_toggle-toggle-customize-' + this.model.get('hid'));
+      let customize_model = Drupal.ui_toggle.Controls.get('ui_toggle-toggle-customize-' + this.model.get('hid'));
       if (checked) {
-        if (typeof(customize_model) != 'undefined') {
+        if (typeof(customize_model) !== 'undefined') {
           customize_model.trigger('ui_toggleShow');
         }
         else {
           customize_model = Drupal.ui_toggle.initCustomizationControls(this.model.get('hid'), true);
-          if (typeof(customize_model) != 'undefined') {
+          if (typeof(customize_model) !== 'undefined') {
             customize_model.trigger('ui_toggleRender');
           }
         }
       }
       else {
-        if (typeof(customize_model) != 'undefined') {
+        if (typeof(customize_model) !== 'undefined') {
           customize_model.trigger('ui_toggleHide');
         }
       }
