@@ -290,12 +290,9 @@
     // Apply layout.
     const ui_toggle = Drupal.ui_toggle;
     const $form = $('form[id^="' + hid + '"]');
-    const exists = typeof(ui_toggle.apps) !== 'undefined' &&
-      typeof(ui_toggle.apps[hid]) !== 'undefined';
+    const exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
     if (exists) {
       const collection = ui_toggle.apps[hid].model.get('elements');
-    }
-    if (exists) {
       collection.forEach(function(model) {
         if (typeof(layout[model.get('id')]) !== 'undefined') {
           model.set('value', true);
