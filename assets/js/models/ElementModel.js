@@ -14,7 +14,7 @@
     },
 
     initialize: function() {
-      if (this.get('value') == true) {
+      if (this.get('value') === true) {
         this.set('checked', 'checked');
       }
     },

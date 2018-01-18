@@ -13,12 +13,12 @@
       value: null,
     },
     url: function() {
-      if (this.get('type') == 'tag') {
+      if (this.get('type') === 'tag') {
         return drupalSettings.ui_toggle.conf.waypoints.tag;
       }
     },
     initialize: function() {
-      if (this.get('value') == 1) {
+      if (this.get('value') === 1) {
         this.set('checked', 'checked');
       }
     },
