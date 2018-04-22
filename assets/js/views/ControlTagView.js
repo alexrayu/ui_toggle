@@ -10,8 +10,8 @@
     template: _.template(drupalSettings.ui_toggle.conf.controlTemplate),
 
     events: function () {
-      const map = {};
-      const eventName = 'change input.ui_toggle-toggle-tag';
+      var map = {};
+      var eventName = 'change input.ui_toggle-toggle-tag';
       map[eventName] = 'changed';
 
       return map;
@@ -25,7 +25,7 @@
     },
 
     render: function () {
-      const html = this.template(this.model.toJSON());
+      var html = this.template(this.model.toJSON());
       this.$container.find('#wrap-' + this.model.get('id')).detach();
       this.$container.append(html);
       this.delegateEvents();
@@ -39,10 +39,10 @@
      * Provides visual indication of the current process.
      */
     setStatus: function () {
-      const status = this.model.get('status');
+      var status = this.model.get('status');
       this.$wrapper.removeClass('error saving initial out');
       this.$wrapper.addClass(status);
-      const $label = this.$wrapper.find('label');
+      var $label = this.$wrapper.find('label');
       if (status === 'saving' || status === 'hidden') {
         $label.html(Drupal.t('Saving, please wait.'));
         this.$control.prop('disabled', true);
@@ -57,9 +57,9 @@
      * Reacts to the value change.
      */
     changed: function () {
-      const value = this.$control.is(':checked');
-      const checked = value ? 'checked' : null;
-      const values = {value: value, checked: checked, status: 'saving'};
+      var value = this.$control.is(':checked');
+      var checked = value ? 'checked' : null;
+      var values = {value: value, checked: checked, status: 'saving'};
       this.model.save(values, {
         type: 'POST',
         success: function (model, response) {

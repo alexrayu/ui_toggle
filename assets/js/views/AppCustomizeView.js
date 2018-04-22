@@ -27,7 +27,7 @@
     },
 
     render: function() {
-      const html = this.template(this.model.toJSON());
+      var html = this.template(this.model.toJSON());
       this.$el.detach();
       this.$container.append(html);
       this.$el = $(this.el);
@@ -96,7 +96,7 @@
     },
 
     saveState: function() {
-      const values = {
+      var values = {
         hid: this.model.get('hid'),
         elements: this.model.get('elements'),
         command: this.model.get('command'),

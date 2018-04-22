@@ -25,7 +25,7 @@
     },
 
     render: function() {
-      const html = this.template(this.model.toJSON());
+      var html = this.template(this.model.toJSON());
       this.$container.detach();
       this.$el.append(html);
       this.$container = this.$form.find('.views-table #wrap-edit-' + this.model.get('id'));
@@ -37,8 +37,8 @@
 
     // Element to model change event.
     evtChanged: function() {
-      const value = this.$control.is(':checked');
-      const checked = value ? 'checked' : null;
+      var value = this.$control.is(':checked');
+      var checked = value ? 'checked' : null;
       Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', 'changed');
       this.model.set({value: value, checked: checked});
       if (value) {
@@ -51,7 +51,7 @@
 
     // Model to element change event.
     mdlChanged: function() {
-      const value = this.model.get('value');
+      var value = this.model.get('value');
       this.$control.prop('checked', this.model.get('checked'));
       if (value) {
         this.$form.find('.' + this.model.get('id')).addClass('ui_toggle-hidden');

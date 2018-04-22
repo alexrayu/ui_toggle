@@ -13,15 +13,15 @@
    *   Drupal context.
    */
   function initui_toggleControls(context) {
-    const ui_toggle = Drupal.ui_toggle;
+    var ui_toggle = Drupal.ui_toggle;
     ui_toggle.Controls = new ui_toggle.ControlsCollection;
     $.each(drupalSettings.ui_toggle.controls, function(index, value) {
-      const $form = $('#ui_toggle-container-' + value.tag.hid).parents('form');
+      var $form = $('#ui_toggle-container-' + value.tag.hid).parents('form');
       if ($(context).find($form).length) {
         if (typeof(value.tag.show) !== 'undefined' && value.tag.show === true) {
-          const item = new ui_toggle.ControlModel(value.tag);
+          var item = new ui_toggle.ControlModel(value.tag);
           ui_toggle.Controls.add(item);
-          const viewData = {
+          var viewData = {
             model: item,
             el: '#' + $form.attr('id'),
           };
@@ -41,7 +41,7 @@
    *  Force UI.
    */
   function initCustomizationControls(hid, force) {
-    const ui_toggle = Drupal.ui_toggle;
+    var ui_toggle = Drupal.ui_toggle;
     if (typeof(force) === 'undefined') {
       force = false;
     }
@@ -55,8 +55,8 @@
         },
       }).done(function(data) {
         if (data.result === 1) {
-          const $form = $('#ui_toggle-container-' + hid).parents('form');
-          const item = new ui_toggle.ControlModel({
+          var $form = $('#ui_toggle-container-' + hid).parents('form');
+          var item = new ui_toggle.ControlModel({
             type: 'customize',
             hid: hid,
             id: 'ui_toggle-toggle-customize-' + hid,
@@ -69,8 +69,8 @@
       });
     }
     else {
-      const $form = $('#ui_toggle-container-' + hid).parents('form');
-      const item = new ui_toggle.ControlModel({
+      var $form = $('#ui_toggle-container-' + hid).parents('form');
+      var item = new ui_toggle.ControlModel({
         type: 'customize',
         hid: hid,
         id: 'ui_toggle-toggle-customize-' + hid,
@@ -92,7 +92,7 @@
       if(typeof(drupalSettings.ui_toggle.layout) !== 'undefined' &&
         typeof(drupalSettings.ui_toggle.layout.hids !== 'undefined')) {
         for (let hid in drupalSettings.ui_toggle.layout.hids) {
-          const $form = $('#ui_toggle-container-' + hid).parents('form');
+          var $form = $('#ui_toggle-container-' + hid).parents('form');
           if ($(context).find($form).length) {
             if (drupalSettings.ui_toggle[hid].type === 'elements') {
               Drupal.ui_toggle.applyElementsLayout(hid, 'user');
@@ -133,8 +133,8 @@
    * @param hid
    */
   Drupal.ui_toggle.getColumns = function(hid) {
-    const $ths = $('form[id^="' + hid + '"] .views-table thead th');
-    const items = [];
+    var $ths = $('form[id^="' + hid + '"] .views-table thead th');
+    var items = [];
     $ths.each(function(index, value) {
       let thClass = $(value).attr('class').match(/views-field-([^\s]+)/)[0];
       if (thClass !== 'views-field-node-bulk-form') {
@@ -151,27 +151,27 @@
    * @param force
    */
   Drupal.ui_toggle.initElementsApp = function(hid, force) {
-    const ui_toggle = Drupal.ui_toggle;
+    var ui_toggle = Drupal.ui_toggle;
     ui_toggle.apps[hid] = {};
     ui_toggle.apps[hid].elements = {};
     ui_toggle.apps[hid].elements.views = [];
-    const hidden = typeof(drupalSettings.ui_toggle.conf.is_admin) !== 'undefined' &&
+    var hidden = typeof(drupalSettings.ui_toggle.conf.is_admin) !== 'undefined' &&
     drupalSettings.ui_toggle.conf.is_admin === true ? null : 'hidden';
     ui_toggle.apps[hid].model = new ui_toggle.AppCustomizeModel({hid: hid, hidden: hidden, type: 'elements'});
     ui_toggle.apps[hid].view = new ui_toggle.AppCustomizeView({model: ui_toggle.apps[hid].model});
-    const collection = new ui_toggle.CustomizeElementsCollection();
-    const layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
+    var collection = new ui_toggle.CustomizeElementsCollection();
+    var layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
     drupalSettings.ui_toggle[hid].elements.forEach(function(id) {
-      const value = (typeof(layout[id]) !== 'undefined') ? true : null;
-      const checked = value ? 'checked' : null;
-      const itemData = {
+      var value = (typeof(layout[id]) !== 'undefined') ? true : null;
+      var checked = value ? 'checked' : null;
+      var itemData = {
         id: id,
         hid: hid,
         value: value,
         checked: checked,
       };
-      const model = new Drupal.ui_toggle.CustomizeElementsModel(itemData);
-      const el = $('[id^="edit-' + id + '"]').parents('.form-item-' + id);
+      var model = new Drupal.ui_toggle.CustomizeElementsModel(itemData);
+      var el = $('[id^="edit-' + id + '"]').parents('.form-item-' + id);
       collection.add(model);
       Drupal.ui_toggle.apps[hid].elements.views.push(new Drupal.ui_toggle.AppElementView({model: model, el: el,}));
     });
@@ -191,17 +191,17 @@
     if (typeof(force) === 'undefined') {
       force = false;
     }
-    const layout = Drupal.ui_toggle.getLayout(hid, type, force);
+    var layout = Drupal.ui_toggle.getLayout(hid, type, force);
     if (layout.length === 0) {
       return;
     }
 
     // Apply layout.
-    const ui_toggle = Drupal.ui_toggle;
-    const actives = drupalSettings.ui_toggle[hid].active_elements;
-    const $form = $('form[id^="' + hid + '"]');
-    const $details = $form.find('.ui_toggle-details');
-    const exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
+    var ui_toggle = Drupal.ui_toggle;
+    var actives = drupalSettings.ui_toggle[hid].active_elements;
+    var $form = $('form[id^="' + hid + '"]');
+    var $details = $form.find('.ui_toggle-details');
+    var exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
     let count = 0;
     let should_open = false;
 
@@ -239,19 +239,19 @@
    *   Force UI.
    */
   Drupal.ui_toggle.initTableApp = function(hid, force) {
-    const ui_toggle = Drupal.ui_toggle;
+    var ui_toggle = Drupal.ui_toggle;
     ui_toggle.apps[hid] = {};
 
-    const hidden = typeof(drupalSettings.ui_toggle.conf.is_admin) !== 'undefined' &&
+    var hidden = typeof(drupalSettings.ui_toggle.conf.is_admin) !== 'undefined' &&
     drupalSettings.ui_toggle.conf.is_admin === true ? null : 'hidden';
     ui_toggle.apps[hid].model = new ui_toggle.AppCustomizeModel({hid: hid, hidden: hidden, type: 'table'});
     ui_toggle.apps[hid].view = new ui_toggle.AppCustomizeView({model: ui_toggle.apps[hid].model});
     ui_toggle.apps[hid].elements = {};
     ui_toggle.apps[hid].elements.views = [];
 
-    const collection = new ui_toggle.CustomizeColumnsCollection();
-    const layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
-    const cols = ui_toggle.getColumns(hid);
+    var collection = new ui_toggle.CustomizeColumnsCollection();
+    var layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
+    var cols = ui_toggle.getColumns(hid);
     cols.forEach(function(id) {
       let value = (typeof(layout[id]) !== 'undefined') ? true : null;
       let checked = value ? 'checked' : null;
@@ -282,17 +282,17 @@
     if (typeof(force) === 'undefined') {
       force = false;
     }
-    const layout = Drupal.ui_toggle.getLayout(hid, type, force);
+    var layout = Drupal.ui_toggle.getLayout(hid, type, force);
     if (layout.length === 0) {
       return;
     }
 
     // Apply layout.
-    const ui_toggle = Drupal.ui_toggle;
-    const $form = $('form[id^="' + hid + '"]');
-    const exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
+    var ui_toggle = Drupal.ui_toggle;
+    var $form = $('form[id^="' + hid + '"]');
+    var exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
     if (exists) {
-      const collection = ui_toggle.apps[hid].model.get('elements');
+      var collection = ui_toggle.apps[hid].model.get('elements');
       collection.forEach(function(model) {
         if (typeof(layout[model.get('id')]) !== 'undefined') {
           model.set('value', true);
