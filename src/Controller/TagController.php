@@ -33,9 +33,7 @@ class TagController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory')
-    );
+    return new static($container->get('config.factory'));
   }
 
   /**

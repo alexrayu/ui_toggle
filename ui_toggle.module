@@ -29,7 +29,8 @@ function ui_toggle_help($route_name, RouteMatchInterface $route_match) {
 function ui_toggle_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   // Check permissions.
-  if (\Drupal::currentUser()->hasPermission('ui_toggle_tag') ||
+  if (\Drupal::currentUser()->id() == 1 ||
+    \Drupal::currentUser()->hasPermission('ui_toggle_tag') ||
     \Drupal::currentUser()->hasPermission('ui_toggle_customize')
   ) {
 
@@ -102,6 +103,7 @@ function ui_toggle_add_app_data(array &$form, FormStateInterface $form_state, $f
     $setting['show'] = TRUE;
   }
 
+  // Load templates.
   $form['#attached']['drupalSettings']['ui_toggle']['controls'][$hid]['tag'] = $setting;
   $form['#attached']['drupalSettings']['ui_toggle']['conf']['controlTemplate'] = file_get_contents(drupal_get_path('module', 'ui_toggle') . '/assets/js/templates/taggability_toggle.template');
   $form['#attached']['drupalSettings']['ui_toggle']['conf']['panelTemplate'] = file_get_contents(drupal_get_path('module', 'ui_toggle') . '/assets/js/templates/app_panel.template');

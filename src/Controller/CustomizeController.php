@@ -33,9 +33,7 @@ class CustomizeController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory')
-    );
+    return new static($container->get('config.factory'));
   }
 
   /**
@@ -83,7 +81,7 @@ class CustomizeController extends ControllerBase {
    * @return array
    *   Status variable.
    */
-  protected function saveLayout(&$data) {
+  protected function saveLayout(array &$data) {
     $db = \Drupal::database();
     $uid = \Drupal::currentUser()->id();
     $state = [];
