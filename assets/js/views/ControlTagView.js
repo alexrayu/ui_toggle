@@ -82,7 +82,7 @@
       });
 
       // Make customize react.
-      let customize_model = Drupal.ui_toggle.Controls.get('ui_toggle-toggle-customize-' + this.model.get('hid'));
+      var customize_model = Drupal.ui_toggle.Controls.get('ui_toggle-toggle-customize-' + this.model.get('hid'));
       if (checked) {
         if (typeof(customize_model) !== 'undefined') {
           customize_model.trigger('ui_toggleShow');

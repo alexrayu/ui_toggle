@@ -91,7 +91,7 @@
       // Init layout.
       if(typeof(drupalSettings.ui_toggle.layout) !== 'undefined' &&
         typeof(drupalSettings.ui_toggle.layout.hids !== 'undefined')) {
-        for (let hid in drupalSettings.ui_toggle.layout.hids) {
+        for (var hid in drupalSettings.ui_toggle.layout.hids) {
           var $form = $('#ui_toggle-container-' + hid).parents('form');
           if ($(context).find($form).length) {
             if (drupalSettings.ui_toggle[hid].type === 'elements') {
@@ -136,7 +136,7 @@
     var $ths = $('form[id^="' + hid + '"] .views-table thead th');
     var items = [];
     $ths.each(function(index, value) {
-      let thClass = $(value).attr('class').match(/views-field-([^\s]+)/)[0];
+      var thClass = $(value).attr('class').match(/views-field-([^\s]+)/)[0];
       if (thClass !== 'views-field-node-bulk-form') {
         items.push(thClass);
       }
@@ -202,22 +202,22 @@
     var $form = $('form[id^="' + hid + '"]');
     var $details = $form.find('.ui_toggle-details');
     var exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
-    let count = 0;
-    let should_open = false;
+    var count = 0;
+    var should_open = false;
 
     if (exists) {
-      let collection = ui_toggle.apps[hid].model.get('elements');
+      var collection = ui_toggle.apps[hid].model.get('elements');
     }
 
-    for (let id in layout) {
+    for (var id in layout) {
       if (typeof(actives[id]) !== 'undefined') {
         should_open = true;
       }
-      let $el = $form.find('[id^="edit-' + id + '"]').parents('.form-item').detach();
+      var $el = $form.find('[id^="edit-' + id + '"]').parents('.form-item').detach();
       count++;
       $details.find('.details-wrapper').append($el);
       if (exists) {
-        let model = collection.get(id);
+        var model = collection.get(id);
         model.set('value', true);
         model.set('checked', 'checked');
       }
@@ -253,16 +253,16 @@
     var layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
     var cols = ui_toggle.getColumns(hid);
     cols.forEach(function(id) {
-      let value = (typeof(layout[id]) !== 'undefined') ? true : null;
-      let checked = value ? 'checked' : null;
-      let itemData = {
+      var value = (typeof(layout[id]) !== 'undefined') ? true : null;
+      var checked = value ? 'checked' : null;
+      var itemData = {
         id: id,
         hid: hid,
         value: value,
         checked: checked,
       };
-      let model = new Drupal.ui_toggle.CustomizeColumnsModel(itemData);
-      let el = $('form[id^="' + hid + '"] .views-table .' + id);
+      var model = new Drupal.ui_toggle.CustomizeColumnsModel(itemData);
+      var el = $('form[id^="' + hid + '"] .views-table .' + id);
       collection.add(model);
       ui_toggle.apps[hid].elements.views.push(new Drupal.ui_toggle.AppColumnsView({model: model, el: el,}));
     });
@@ -297,14 +297,14 @@
         if (typeof(layout[model.get('id')]) !== 'undefined') {
           model.set('value', true);
           model.set('checked', 'checked');
-          let $el = $form.find('.' + model.get('id'));
+          var $el = $form.find('.' + model.get('id'));
           $el.addClass('ui_toggle-hidden');
         }
       });
     }
     else {
-      for (let id in layout) {
-        let $el = $form.find('.' + id);
+      for (var id in layout) {
+        var $el = $form.find('.' + id);
         $el.addClass('ui_toggle-hidden');
       }
     }
