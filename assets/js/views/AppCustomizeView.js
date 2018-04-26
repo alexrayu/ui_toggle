@@ -19,7 +19,7 @@
     initialize: function() {
       this.el = '#ui_toggle-app-panel-' + this.model.get('hid');
       this.$el = $(this.el);
-      this.$container = $('#ui_toggle-container-' + this.model.get('hid'));
+      this.$container = $('#ui_toggle-content-' + this.model.get('hid'));
       this.$form = $('form[id^="' + this.model.get('hid') + '"]');
       this.$details = this.$form.find('.ui_toggle-details');
       this.listenTo(this.model, 'change', this.setStatus);
@@ -96,15 +96,18 @@
     },
 
     saveState: function() {
+      var button = $('a.save', this.el);
       var values = {
         hid: this.model.get('hid'),
         elements: this.model.get('elements'),
         command: this.model.get('command'),
       };
+      button.addClass('saving');
       this.model.save(values, {
         type: 'POST',
         success: function (model, response) {
           model.set('command', null);
+          button.removeClass('saving');
           if (typeof(response.success) !== 'undefined') {
             model.set('status', 'saved');
           }
@@ -115,6 +118,7 @@
         error: function (model) {
           model.set('command', null);
           model.set('status', 'error');
+          button.removeClass('saving');
         }
       });
     },

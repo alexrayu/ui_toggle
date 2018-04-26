@@ -26,7 +26,7 @@
     render: function() {
       var html = this.template(this.model.toJSON());
       this.$container.detach();
-      this.$el.addClass('ui_toggle-element-container').append(html);
+      this.$el.addClass('ui_toggle-element-content').append(html);
       this.$control = this.$el.find('input.ui_toggle-app-element');
       this.delegateEvents();
 

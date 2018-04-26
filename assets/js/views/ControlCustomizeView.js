@@ -19,7 +19,7 @@
 
     initialize: function() {
       this.$el = $(this.el);
-      this.$container = this.$el.find('#ui_toggle-container-' + this.model.get('hid'));
+      this.$container = this.$el.find('#ui_toggle-content-' + this.model.get('hid'));
       this.listenTo(this.model, 'change', this.setStatus);
       this.model.on('ui_toggleHide', this.hide, this);
       this.model.on('ui_toggleShow', this.show, this);

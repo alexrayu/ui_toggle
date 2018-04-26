@@ -1,4 +1,4 @@
 <div id="wrap-<%= id %>" class="ui_toggle-toggle-wrapper ui_toggle-<%= type %>-wrapper <%= status %>">
   <input title="<%= title %>" class="ui_toggle-toggle ui_toggle-toggle-<%= type %> form-checkbox" type="checkbox" id="<%= id %>" name="<%= id %>" <%= checked %>>
-  <label for="<%= id %>" class="option"><%= title %></label>
+  <label for="<%= id %>" title="<%= title %>" class="option"></label>
 </div>

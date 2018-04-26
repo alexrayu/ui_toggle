@@ -8,16 +8,25 @@
   font-weight: normal;
   font-style: normal;
 }
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Container */
 .ui_toggle {
   position: absolute;
-  right: 5px;
-  margin-top: -32px;
+  right: -2px;
   z-index: 50;
-  background: rgba(255, 255, 255, .85);
-  min-height: 115px;
-  min-width: 100px;
+  background: rgba(0,0,0,.8);
+  border-top: 2px solid #327ebd;
+  color: #fff;
+}
+.ui-toggle-content {
+  float: none;
+  clear: both;
+  width: 100px;
 }
 .ui_toggle .ajax-progress .throbber {
   position: absolute;
@@ -36,6 +45,7 @@
 }
 .ui_toggle-toggle-wrapper {
   width: 40px;
+  height: 50px;
   float: right;
   position: relative;
 }
@@ -44,47 +54,38 @@
   margin: 0;
 }
 .ui_toggle-toggle-wrapper label {
-  position: relative;
-  float: right;
-  cursor: pointer;
-  width: 100px;
-  height: 1.2em;
-  margin-top: -20px;
-  padding: 5px;
-  text-align: right;
-  font-size: .8em;
-  line-height: 1.5em;
-  color: rgba(0,0,0,0);
-  background: rgba(0,0,0,0);
-}
-.ui_toggle-toggle-wrapper label:hover {
-  background: #fafafa;
-  color: #333;
+  display: block !important;
+  font-size: 0 !important;
+  width: 0;
+  height: 0;
 }
 .ui_toggle-toggle-wrapper label::after {
+  display: block;
   font-family: 'ui_toggle' !important;
   font-weight: normal;
-  color: rgba(0, 0, 0, .3);
+  color: rgba(255,255,255,.3);
   border-radius: 50%;
-  border: 2px solid #f0f0f0;
+  border: 2px solid rgba(255,255,255,.3);
   font-size: 16px;
   line-height: 25px;
   position: absolute;
   text-align: center;
   width: 24px; height: 24px;
   padding: 2px;
-  margin-top: 22px;
   right: 5px;
   transition: 200ms;
-  background: #fff;
+  margin: 10px 5px;
 }
 .ui_toggle-toggle:checked + label::after,
 .ui_toggle-toggle-wrapper.checked label::after {
   font-size: 16px;
-  color: #327ebd;
-  border-color: #327ebd;
+  color: rgba(255,255,255,.8);
+  border-color: rgba(255,255,255,.8);
 }
 /* Type specific toggles */
+.ui_toggle-tag-wrapper {
+  margin-right: 3px;
+}
 .ui_toggle-tag-wrapper label:after {
   content: '\e901';
 }
@@ -92,10 +93,11 @@
   content: '\e900';
 }
 .saving label::after {
-  font-size: 16px !important;
-  color: #327ebd !important;
-  content: '\e902';
-  border-color: #f0f0f0 !important;
+  content: '';
+  border-color: #327ebd !important;
+  border: none;
+  border-top: 2px solid;
+  animation: spinner .5s linear infinite;
 }
 .error label::after {
   font-size: 16px !important;
@@ -115,28 +117,24 @@
 }
 /* Panel */
 .ui_toggle-app-panel {
-  position: absolute;
   text-align: center;
-  border-top: 2px solid #f0f0f0;
-  top: 76px;
-  right: 0;
-  padding: 5px 0;
-  width: 100px;
+  padding: 50px 0 0 0;
 }
 .ui_toggle-app-panel .ui_toggle-app-control {
+  border: 2px solid transparent;
   font-family: 'ui_toggle' !important;
   font-weight: normal;
   content: '\e902';
   display: inline-block;
   position: relative;
+  overflow: hidden;
   width: 24px;
   height: 24px;
   line-height: 24px;
-  font-size: 16px;
+  font-size: 14px !important;
   text-align: center;
-  background: rgba(0, 0, 0, .3);
-  color: #fff;
-  border-radius: 50%;
+  color: rgba(255,255,255,.8);
+  border-radius: 100%;
 }
 .ui_toggle-app-panel .ui_toggle-app-control.reset {
   font-size: 13px;
@@ -159,9 +157,20 @@
   color: #fff !important;
   background: #d33;
 }
+.ui_toggle-app-panel .saving {
+  text-indent: -500px;
+  font-size: 0 !important;
+  border-color: #327ebd !important;
+  border: none;
+  border-top: 2px solid;
+  animation: spinner .5s linear infinite;
+}
 .ui_toggle-app-panel .ui_toggle-app-control:hover {
   text-decoration: none;
   background: #327ebd;
+}
+.ui_toggle-app-panel .ui_toggle-app-control.saving:hover {
+  background: transparent;
 }
 .ui_toggle-app-panel .ui_toggle-app-control:focus {
   text-decoration: none;
@@ -171,6 +180,7 @@
   background: #fff;
   color: #327ebd;
 }
+
 /* Elements app */
 .ui_toggle-details {
   display: none;
@@ -227,17 +237,13 @@
   background: #327ebd;
 }
 .ui_toggle-app-panel .response {
-  position: absolute;
-  right: 0;
   margin-top: 10px;
   padding: 5px;
-  width: 100px;
   text-align: right;
   font-size: 11px;
-  line-height: 17px;
+  line-height: 15px;
   box-sizing: border-box;
-  background: #fbfbfb;
-  border-top: 2px solid #f0f0f0;
+  border-top: 1px solid rgba(255,255,255,.25);
 }
 .ui_toggle-app-panel .response p {
   margin-top: 0;

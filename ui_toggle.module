@@ -87,6 +87,13 @@ function ui_toggle_add_app_data(array &$form, FormStateInterface $form_state, $f
     ],
     '#attached' => ['library' => ['ui_toggle/ui_toggle']],
   ];
+  $form['ui_toggle']['clearfix'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['ui-toggle-content'],
+      'id' => 'ui_toggle-content-' . $hid,
+    ],
+  ];
 
   // Basic tag setting.
   $setting = [

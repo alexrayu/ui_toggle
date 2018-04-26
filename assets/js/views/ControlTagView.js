@@ -19,7 +19,7 @@
 
     initialize: function () {
       this.$el = $(this.el);
-      this.$container = this.$el.find('#ui_toggle-container-' + this.model.get('hid'));
+      this.$container = this.$el.find('#ui_toggle-content-' + this.model.get('hid'));
       this.listenTo(this.model, 'change', this.setStatus);
       this.render();
     },
@@ -44,11 +44,11 @@
       this.$wrapper.addClass(status);
       var $label = this.$wrapper.find('label');
       if (status === 'saving' || status === 'hidden') {
-        $label.html(Drupal.t('Saving, please wait.'));
+        $label.attr('title', Drupal.t('Saving, please wait.'));
         this.$control.prop('disabled', true);
       }
       else {
-        $label.html(this.model.get('title'));
+        $label.attr('title', this.model.get('title'));
         this.$control.prop('disabled', false);
       }
     },
