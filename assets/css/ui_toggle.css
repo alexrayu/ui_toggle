@@ -239,7 +239,7 @@
   background: #327ebd;
 }
 .ui_toggle-app-panel .response {
-  max-width: 100px;
+  width: 100px;
   margin-top: 10px;
   padding: 5px;
   text-align: right;
