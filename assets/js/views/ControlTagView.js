@@ -27,7 +27,7 @@
     render: function () {
       var html = this.template(this.model.toJSON());
       this.$container.find('#wrap-' + this.model.get('id')).detach();
-      this.$container.append(html);
+      this.$container.prepend(html);
       this.delegateEvents();
       this.$wrapper = this.$container.find('#wrap-' + this.model.get('id'));
       this.$control = this.$wrapper.find('#' + this.model.get('id'));

@@ -26,6 +26,7 @@
 .ui-toggle-content {
   float: none;
   clear: both;
+  text-align: center;
 }
 .ui_toggle .ajax-progress .throbber {
   position: absolute;
@@ -43,9 +44,9 @@
   display: none !important;
 }
 .ui_toggle-toggle-wrapper {
+  display: inline-block;
   width: 50px;
   height: 50px;
-  float: right;
   position: relative;
 }
 .ui_toggle-toggle-wrapper .form-item {
@@ -120,7 +121,6 @@
 /* Panel */
 .ui_toggle-app-panel {
   text-align: center;
-  padding: 50px 0 0 0;
 }
 .ui_toggle-app-panel .ui_toggle-app-control {
   border: 2px solid transparent;
