@@ -17,7 +17,7 @@
 /* Container */
 .ui_toggle {
   position: absolute;
-  right: -2px;
+  right: 0;
   z-index: 50;
   background: rgba(0,0,0,.8);
   border-top: 2px solid #327ebd;
@@ -26,7 +26,6 @@
 .ui-toggle-content {
   float: none;
   clear: both;
-  width: 100px;
 }
 .ui_toggle .ajax-progress .throbber {
   position: absolute;
@@ -44,7 +43,7 @@
   display: none !important;
 }
 .ui_toggle-toggle-wrapper {
-  width: 40px;
+  width: 50px;
   height: 50px;
   float: right;
   position: relative;
@@ -72,7 +71,7 @@
   text-align: center;
   width: 24px; height: 24px;
   padding: 2px;
-  right: 5px;
+  right: 2px;
   transition: 200ms;
   margin: 10px 5px;
 }
@@ -104,6 +103,9 @@
   color: #d33 !important;
   content: '\e902';
   border-color: #d33 !important;
+}
+.out {
+  width: 0;
 }
 .out label::after {
   font-size: 1px !important;
@@ -237,10 +239,11 @@
   background: #327ebd;
 }
 .ui_toggle-app-panel .response {
+  max-width: 100px;
   margin-top: 10px;
   padding: 5px;
   text-align: right;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 15px;
   box-sizing: border-box;
   border-top: 1px solid rgba(255,255,255,.25);
