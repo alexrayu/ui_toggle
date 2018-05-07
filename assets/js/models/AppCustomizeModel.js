@@ -15,6 +15,7 @@
       type: 'elements',
       hidden: null,
       reset_title: Drupal.t('Reset'),
+      changed: false,
       elements: {},
     },
     url: function() {

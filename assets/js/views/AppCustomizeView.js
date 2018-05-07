@@ -42,6 +42,12 @@
         case 'on':
           this.show();
           this.setMessage(Drupal.t('Please configure now.'));
+
+          // Set changed status if has changes but no changed status.
+          if (this.model.get('changed') === true) {
+            this.model.set('status', 'changed');
+            this.setStatus();
+          }
           break;
         case 'off':
           this.hide();
@@ -50,9 +56,11 @@
           this.setMessage(Drupal.t('Saving ...'));
           break;
         case 'changed':
+          this.model.set('changed', true);
           this.setMessage(Drupal.t('You have unsaved settings.'));
           break;
         case 'saved':
+          this.model.set('changed', false);
           this.setMessage(Drupal.t('Saved successfully.'));
           break;
         case 'resetting':
@@ -85,6 +93,7 @@
         Drupal.ui_toggle.applyTableLayout(this.model.get('hid'), 'preset');
       }
       this.model.set('status', 'changed');
+      this.model.set('changed', true);
     },
 
     clickControl: function(e) {
