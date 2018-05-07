@@ -28,6 +28,11 @@ function ui_toggle_help($route_name, RouteMatchInterface $route_match) {
  */
 function ui_toggle_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  // Return if not admin route.
+  if (strpos($form['#action'], '/admin/') === FALSE) {
+    return;
+  }
+
   // Check permissions.
   if (\Drupal::currentUser()->id() == 1 ||
     \Drupal::currentUser()->hasPermission('ui_toggle_tag') ||

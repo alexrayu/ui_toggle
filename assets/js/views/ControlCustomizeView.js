@@ -54,12 +54,15 @@
       var value = this.$control.is(':checked');
       Drupal.ui_toggle.apps = Drupal.ui_toggle.apps || {};
       if (value) {
-        Drupal.ui_toggle.initCustomizeApp(this.model.get('hid'), true);
-        Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', 'on');
+        if (this.model.get('status') === 'initial') {
+          Drupal.ui_toggle.initCustomizeApp(this.model.get('hid'), true);
+        }
+        this.model.set('status', 'on');
       }
       else {
-        Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', 'off');
+        this.model.set('status', 'off');
       }
+      Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', this.model.get('status'));
     },
 
     hide: function() {
