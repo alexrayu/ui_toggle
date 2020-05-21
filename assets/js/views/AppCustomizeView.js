@@ -1,6 +1,6 @@
 /**
  * @file
- * A Backbone view for the ui_toggle control toggle.
+ * A Backbone view for the save/reset subform controls.
  */
 
 (function ($, Drupal, drupalSettings, Backbone) {
@@ -16,17 +16,18 @@
       'click a.ui_toggle-app-control' : 'clickControl',
     },
 
-    initialize: function() {
+    initialize: function () {
       this.el = '#ui_toggle-app-panel-' + this.model.get('hid');
       this.$el = $(this.el);
       this.$container = $('#ui_toggle-content-' + this.model.get('hid'));
       this.$form = $('form[id^="' + this.model.get('hid') + '"]');
       this.$details = this.$form.find('.ui_toggle-details');
+      this.customizeModel = Drupal.ui_toggle.Controls.get('ui_toggle-toggle-customize-' + this.model.get('hid'));
       this.listenTo(this.model, 'change', this.setStatus);
       this.render();
     },
 
-    render: function() {
+    render: function () {
       var html = this.template(this.model.toJSON());
       this.$el.detach();
       this.$container.append(html);
@@ -36,7 +37,7 @@
       return this;
     },
 
-    setStatus: function() {
+    setStatus: function () {
       this.$el.removeClass('on off saved initial changed error').addClass(this.model.get('status'));
       switch (this.model.get('status')) {
         case 'on':
@@ -49,42 +50,53 @@
             this.setStatus();
           }
           break;
+
         case 'off':
           this.hide();
           break;
+
         case 'saving':
           this.setMessage(Drupal.t('Saving ...'));
           break;
+
         case 'changed':
           this.model.set('changed', true);
           this.setMessage(Drupal.t('You have unsaved settings.'));
           break;
+
         case 'saved':
           this.model.set('changed', false);
           this.setMessage(Drupal.t('Saved successfully.'));
+          var view = this;
+          setTimeout(function () {
+            view.hide();
+            view.customizeModel.trigger('ui_toggleOut');
+          }, 500);
           break;
+
         case 'resetting':
           this.setMessage(Drupal.t('Reverting to defaults ...'));
           break;
+
         case 'error':
           this.setMessage(Drupal.t('<p>Could not save :(</p><p>Please try again in a minute. If the error persists, please contact the admins.</p>'));
           break;
       }
     },
 
-    save: function() {
+    save: function () {
       this.model.set('status', 'saving');
       this.model.set('command', 'saveUser');
       this.saveState();
     },
 
-    admSave: function() {
+    admSave: function () {
       this.model.set('status', 'saving');
       this.model.set('command', 'savePreset');
       this.saveState();
     },
 
-    hreset: function() {
+    hreset: function () {
       this.model.set('status', 'reset');
       if (this.model.get('type') === 'elements') {
         Drupal.ui_toggle.applyElementsLayout(this.model.get('hid'), 'preset');
@@ -96,15 +108,15 @@
       this.model.set('changed', true);
     },
 
-    clickControl: function(e) {
+    clickControl: function (e) {
       e.preventDefault();
     },
 
-    setMessage: function(message) {
+    setMessage: function (message) {
       this.$el.find('.response').html(message);
     },
 
-    saveState: function() {
+    saveState: function () {
       var button = $('a.save', this.el);
       var values = {
         hid: this.model.get('hid'),
@@ -132,7 +144,7 @@
       });
     },
 
-    hide: function() {
+    hide: function () {
       this.$el.slideUp(150);
       if (this.$form.hasClass('views-exposed-form')) {
         this.$form.find('.js-form-item').removeClass('ui_toggle-element-container');
@@ -148,7 +160,7 @@
       }
     },
 
-    show: function() {
+    show: function () {
       this.$el.slideDown(150);
       if (this.$form.hasClass('views-exposed-form')) {
         this.$form.find('.js-form-item').addClass('ui_toggle-element-container');

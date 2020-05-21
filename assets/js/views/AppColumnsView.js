@@ -13,7 +13,7 @@
       'change .ui_toggle-app-element': 'evtChanged',
     },
 
-    initialize: function() {
+    initialize: function () {
       this.$el = $(this.el);
       this.$el.addClass('ui_toggle-element-container');
       this.$form = $('form[id^="' + this.model.get('hid') + '"]');
@@ -24,7 +24,7 @@
       this.mdlChanged();
     },
 
-    render: function() {
+    render: function () {
       var html = this.template(this.model.toJSON());
       this.$container.detach();
       this.$el.append(html);
@@ -36,7 +36,7 @@
     },
 
     // Element to model change event.
-    evtChanged: function() {
+    evtChanged: function () {
       var value = this.$control.is(':checked');
       var checked = value ? 'checked' : null;
       Drupal.ui_toggle.apps[this.model.get('hid')].model.set('status', 'changed');
@@ -50,7 +50,7 @@
     },
 
     // Model to element change event.
-    mdlChanged: function() {
+    mdlChanged: function () {
       var value = this.model.get('value');
       this.$control.prop('checked', this.model.get('checked'));
       if (value) {

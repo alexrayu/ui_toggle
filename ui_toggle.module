@@ -79,7 +79,7 @@ function ui_toggle_add_app_data(array &$form, FormStateInterface $form_state, $f
   $is_customizable = $config->get($hid);
 
   // General config.
-  $form['#attached']['drupalSettings']['ui_toggle']['conf']['waypoints']['tag'] = $base_url . '/ui_toggle/tag/ajax';
+  $form['#attached']['drupalSettings']['ui_toggle']['conf']['waypoints']['tag'] = $base_url . '/ui_toggle/switch/ajax';
   $form['#attached']['drupalSettings']['ui_toggle']['conf']['waypoints']['customize'] = $base_url . '/ui_toggle/customize/ajax';
 
   // Add controls container.
@@ -147,7 +147,7 @@ function ui_toggle_add_app_data(array &$form, FormStateInterface $form_state, $f
 
   // User allowed to customize the form visibility.
   if (\Drupal::currentUser()->hasPermission('ui_toggle_customize')) {
-    if ($form_id == 'views_exposed_form') {
+    if ($form_id === 'views_exposed_form') {
       $form_items = ui_toggle_form_items($form, $form_state);
       $form['#attached']['drupalSettings']['ui_toggle'][$hid]['elements'] = $form_items['editable'];
       $form['#attached']['drupalSettings']['ui_toggle'][$hid]['active_elements'] = $form_items['active'];
