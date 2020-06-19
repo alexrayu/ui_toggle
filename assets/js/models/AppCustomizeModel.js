@@ -18,7 +18,7 @@
       changed: false,
       elements: {},
     },
-    url: function() {
+    url: function () {
       return drupalSettings.ui_toggle.conf.waypoints.customize;
     },
   });

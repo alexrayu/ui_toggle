@@ -9,32 +9,32 @@
  * Implements hook_schema().
  */
 function ui_toggle_schema() {
-  $schema['ui_toggle'] = array(
+  $schema['ui_toggle'] = [
     'description' => 'Stores the presets.',
-    'fields' => array(
-      'uid' => array(
+    'fields' => [
+      'uid' => [
         'description' => 'The user id for the preset.',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
         'default' => 0,
-      ),
-      'hid' => array(
+      ],
+      'hid' => [
         'description' => 'The form hid for the preset.',
         'type' => 'varchar_ascii',
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
-      ),
-      'data' => array(
+      ],
+      'data' => [
         'description' => 'Serialized layout settings.',
         'type' => 'blob',
         'not null' => FALSE,
         'size' => 'big',
-      ),
-    ),
-    'primary key' => array('uid', 'hid'),
-  );
+      ],
+    ],
+    'primary key' => ['uid', 'hid'],
+  ];
 
   return $schema;
 }

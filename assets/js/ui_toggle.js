@@ -15,7 +15,7 @@
   function initui_toggleControls(context) {
     var ui_toggle = Drupal.ui_toggle;
     ui_toggle.Controls = new ui_toggle.ControlsCollection;
-    $.each(drupalSettings.ui_toggle.controls, function(index, value) {
+    $.each(drupalSettings.ui_toggle.controls, function (index, value) {
       var $form = $('#ui_toggle-container-' + value.tag.hid).parents('form');
       if ($(context).find($form).length) {
         if (typeof(value.tag.show) !== 'undefined' && value.tag.show === true) {
@@ -53,7 +53,7 @@
           command: 'checkIsCustomizable',
           hid: hid,
         },
-      }).done(function(data) {
+      }).done(function (data) {
         if (data.result === 1) {
           var $form = $('#ui_toggle-container-' + hid).parents('form');
           var item = new ui_toggle.ControlModel({
@@ -89,7 +89,7 @@
       initui_toggleControls(context);
 
       // Init layout.
-      if(typeof(drupalSettings.ui_toggle.layout) !== 'undefined' &&
+      if (typeof(drupalSettings.ui_toggle.layout) !== 'undefined' &&
         typeof(drupalSettings.ui_toggle.layout.hids !== 'undefined')) {
         for (var hid in drupalSettings.ui_toggle.layout.hids) {
           var $form = $('#ui_toggle-container-' + hid).parents('form');
@@ -111,7 +111,7 @@
     initCustomizationControls: initCustomizationControls,
 
     // Initialize a customization app by hid.
-    initCustomizeApp: function(hid, force) {
+    initCustomizeApp: function (hid, force) {
       this.apps = this.apps || {};
       if (typeof(force) === 'undefined') {
         force = false;
@@ -130,12 +130,13 @@
 
   /**
    * Get columns ids for a given form table.
+   *
    * @param hid
    */
-  Drupal.ui_toggle.getColumns = function(hid) {
+  Drupal.ui_toggle.getColumns = function (hid) {
     var $ths = $('form[id^="' + hid + '"] .views-table thead th');
     var items = [];
-    $ths.each(function(index, value) {
+    $ths.each(function (index, value) {
       var thClass = $(value).attr('class').match(/views-field-([^\s]+)/)[0];
       if (thClass !== 'views-field-node-bulk-form') {
         items.push(thClass);
@@ -147,10 +148,11 @@
 
   /**
    * Initialize specifically the elements app.
+   *
    * @param hid
    * @param force
    */
-  Drupal.ui_toggle.initElementsApp = function(hid, force) {
+  Drupal.ui_toggle.initElementsApp = function (hid, force) {
     var ui_toggle = Drupal.ui_toggle;
     ui_toggle.apps[hid] = {};
     ui_toggle.apps[hid].elements = {};
@@ -161,7 +163,7 @@
     ui_toggle.apps[hid].view = new ui_toggle.AppCustomizeView({model: ui_toggle.apps[hid].model});
     var collection = new ui_toggle.CustomizeElementsCollection();
     var layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
-    drupalSettings.ui_toggle[hid].elements.forEach(function(id) {
+    drupalSettings.ui_toggle[hid].elements.forEach(function (id) {
       var value = (typeof(layout[id]) !== 'undefined') ? true : null;
       var checked = value ? 'checked' : null;
       var itemData = {
@@ -180,6 +182,7 @@
 
   /**
    * Applies an elements layout.
+   *
    * @param hid
    *  Form hid.
    * @param type
@@ -187,7 +190,7 @@
    * @param force
    *  Whether layout can be forced (if a new layout called in ui).
    */
-  Drupal.ui_toggle.applyElementsLayout = function(hid, type, force) {
+  Drupal.ui_toggle.applyElementsLayout = function (hid, type, force) {
     if (typeof(force) === 'undefined') {
       force = false;
     }
@@ -238,7 +241,7 @@
    * @param force
    *   Force UI.
    */
-  Drupal.ui_toggle.initTableApp = function(hid, force) {
+  Drupal.ui_toggle.initTableApp = function (hid, force) {
     var ui_toggle = Drupal.ui_toggle;
     ui_toggle.apps[hid] = {};
 
@@ -252,7 +255,7 @@
     var collection = new ui_toggle.CustomizeColumnsCollection();
     var layout = Drupal.ui_toggle.getLayout(hid, 'user', force);
     var cols = ui_toggle.getColumns(hid);
-    cols.forEach(function(id) {
+    cols.forEach(function (id) {
       var value = (typeof(layout[id]) !== 'undefined') ? true : null;
       var checked = value ? 'checked' : null;
       var itemData = {
@@ -271,6 +274,7 @@
 
   /**
    * Applies a table layout.
+   *
    * @param hid
    *  Form hid.
    * @param type
@@ -278,7 +282,7 @@
    * @param force
    *  Whether layout can be forced (if a new layout called in ui).
    */
-  Drupal.ui_toggle.applyTableLayout = function(hid, type, force) {
+  Drupal.ui_toggle.applyTableLayout = function (hid, type, force) {
     if (typeof(force) === 'undefined') {
       force = false;
     }
@@ -293,7 +297,7 @@
     var exists = typeof(ui_toggle.apps) !== 'undefined' && typeof(ui_toggle.apps[hid]) !== 'undefined';
     if (exists) {
       var collection = ui_toggle.apps[hid].model.get('elements');
-      collection.forEach(function(model) {
+      collection.forEach(function (model) {
         if (typeof(layout[model.get('id')]) !== 'undefined') {
           model.set('value', true);
           model.set('checked', 'checked');
@@ -322,7 +326,7 @@
    *
    * @return layout object.
    */
-  Drupal.ui_toggle.getLayout = function(hid, type, force) {
+  Drupal.ui_toggle.getLayout = function (hid, type, force) {
     if (typeof(force) === 'undefined') {
       force = false;
     }
@@ -345,7 +349,7 @@
     return drupalSettings.ui_toggle.layout[hid][type];
   };
 
-  Backbone.View.prototype.close = function(){
+  Backbone.View.prototype.close = function () {
     this.remove();
     this.unbind();
   };
